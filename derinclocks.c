@@ -8,13 +8,9 @@ static SceUID g_hooks[1];
 
 int (*_kscePowerGetGpuEs4ClockFrequency)(int*, int*);
 int (*_kscePowerGetGpuClockFrequency)(void);
-int (*_ksceKernelGetModuleInfo)(SceUID, SceUID, SceKernelModuleInfo *);
-int (*_ksceKernelGetModuleList)(SceUID pid, int flags1, int flags2, SceUID *modids, size_t *num);
 int r1, r2;
 #define kscePowerGetGpuEs4ClockFrequency _kscePowerGetGpuEs4ClockFrequency
 #define kscePowerGetGpuClockFrequency _kscePowerGetGpuClockFrequency
-#define ksceKernelGetModuleInfo _ksceKernelGetModuleInfo
-#define ksceKernelGetModuleList _ksceKernelGetModuleList
 
 void clocks() {
 	kscePowerGetGpuEs4ClockFrequency(&r1, &r2);
@@ -43,11 +39,6 @@ void _start() __attribute__ ((weak, alias ("module_start")));
 int module_start(SceSize argc, const void *args) {	
 	module_get_export_func(KERNEL_PID, "ScePower", 0x1590166F, 0x475BCC82, &_kscePowerGetGpuEs4ClockFrequency);
 	module_get_export_func(KERNEL_PID, "ScePower", 0x1590166F, 0x64641E6A, &_kscePowerGetGpuClockFrequency);
-
-	if(module_get_export_func(KERNEL_PID, "SceKernelModulemgr", 0xC445FA63, 0xD269F915 , &_ksceKernelGetModuleInfo))
-		module_get_export_func(KERNEL_PID, "SceKernelModulemgr", 0x92C9FFC2, 0xDAA90093 , &_ksceKernelGetModuleInfo);
-	if(module_get_export_func(KERNEL_PID, "SceKernelModulemgr", 0xC445FA63, 0x97CF7B4E , &_ksceKernelGetModuleList))
-		module_get_export_func(KERNEL_PID, "SceKernelModulemgr", 0x92C9FFC2, 0xB72C75A4 , &_ksceKernelGetModuleList);
 
 	g_hooks[0] = taiHookFunctionExportForKernel(KERNEL_PID, &ref_hook0, "SceDisplay",0x9FED47AC,0x16466675, _sceDisplaySetFrameBufInternalForDriver); 
 
