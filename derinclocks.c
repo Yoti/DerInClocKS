@@ -19,10 +19,10 @@ int r1, r2;
 void clocks() {
 	kscePowerGetGpuEs4ClockFrequency(&r1, &r2);
 	blit_stringf(20, 50, "ARM: %d", kscePowerGetArmClockFrequency());
-	blit_stringf(20, 60, "BUS: %d", kscePowerGetBusClockFrequency());
-	blit_stringf(20, 70, "GPU: %d", kscePowerGetGpuClockFrequency());
-	blit_stringf(20, 80, "XBA: %d", kscePowerGetGpuXbarClockFrequency());
-	blit_stringf(20, 90, "ES4: %d", r1);
+	blit_stringf(20, 75, "BUS: %d", kscePowerGetBusClockFrequency());
+	blit_stringf(20, 100, "GPU: %d", kscePowerGetGpuClockFrequency());
+	blit_stringf(20, 125, "XBA: %d", kscePowerGetGpuXbarClockFrequency());
+	blit_stringf(20, 150, "ES4: %d", r1);
 }
 
 static tai_hook_ref_t ref_hook0;
